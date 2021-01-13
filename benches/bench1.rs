@@ -1,12 +1,12 @@
 #![feature(test)]
 extern crate test;
 
-use test::Bencher;
-use rand::Rng;
 use plr::GreedyPLR;
 use plr::Segment;
-use std::cmp::Ordering;
+use rand::Rng;
 use std::cmp::min;
+use std::cmp::Ordering;
+use test::Bencher;
 
 const N: usize = 100000;
 
@@ -14,7 +14,7 @@ const N: usize = 100000;
 fn bi_search(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
 
-    let mut v = vec!();
+    let mut v = vec![];
     for i in 0..N {
         v.push((i as f64).powf(1.1) as usize);
     }
@@ -44,15 +44,21 @@ fn bi_search(b: &mut Bencher) {
         }
         total_count += 1;
     });
-    println!("Total count: {}, correct: {}, wrong: {}, not_found: {}, rate: {}",
-             total_count, correct_count, wrong_count, not_found_count, correct_count as f64 / total_count as f64);
+    println!(
+        "Total count: {}, correct: {}, wrong: {}, not_found: {}, rate: {}",
+        total_count,
+        correct_count,
+        wrong_count,
+        not_found_count,
+        correct_count as f64 / total_count as f64
+    );
 }
 
 #[bench]
 fn plr_search(b: &mut Bencher) {
     let mut rng = rand::thread_rng();
 
-    let mut v = vec!();
+    let mut v = vec![];
     for i in 0..N {
         v.push((i as f64).powf(1.1) as usize);
     }
@@ -84,8 +90,14 @@ fn plr_search(b: &mut Bencher) {
         }
         total_count += 1;
     });
-    println!("Total count: {}, correct: {}, wrong: {}, not_found: {}, rate: {}",
-             total_count, correct_count, wrong_count, not_found_count, correct_count as f64 / total_count as f64);
+    println!(
+        "Total count: {}, correct: {}, wrong: {}, not_found: {}, rate: {}",
+        total_count,
+        correct_count,
+        wrong_count,
+        not_found_count,
+        correct_count as f64 / total_count as f64
+    );
 }
 
 fn plr_predict(segments: &Vec<Segment>, key: usize, v: &Vec<usize>) -> Result<usize, usize> {
