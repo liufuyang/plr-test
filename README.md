@@ -1,6 +1,10 @@
-# plr-test
+# plr-test - Testing Greedy Piecewise Logistic Regression
 
 Testing using crate https://crates.io/crates/plr to speed up binary search of a sorted vec.
+
+Also providing a binary cmd line tool `plt`. 
+
+Including some examples showing how to use Greedy Piecewise Logistic Regression to speed up binary search.
 
 ## How to build and use the binary tool
 With input file format like
@@ -40,7 +44,8 @@ Use the cmd tool:
 [{"start":1.0,"stop":5.0,"slope":25.0,"intercept":-17.0},{"start":5.0,"stop":7.0,"slope":110.0,"intercept":-48.0},{"start":7.0,"stop":1.7976931348623157e308,"slope":38.0,"intercept":520.0}]
 ```
 
-
+See [example code here](https://github.com/liufuyang/plr-test/blob/master/benches/bench1.rs#L58-L122)
+to learn how to use it to speed up binary search.
 
 ## Bench output
 ```
