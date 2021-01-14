@@ -27,13 +27,42 @@ fn main() -> Result<(), Box<dyn Error>> {
     let file = File::open(opt.input_file)?;
     BufReader::new(file)
         .lines()
-        .map(|line| {
-            line.unwrap()
+        .enumerate()
+        .map(|(n, line)| {
+            let vec = line
+                .unwrap_or_else(|e| panic!(format!("{} on line {}", e.to_string(), n + 1)))
                 .split(",")
-                .map(|s| s.parse::<f64>().unwrap())
-                .collect::<Vec<_>>()
+                .map(|s| {
+                    s.parse::<f64>().unwrap_or_else(|e| {
+                        panic!(format!(
+                            "{} on line {}, while parsing string \"{}\"",
+                            e.to_string(),
+                            n + 1,
+                            s
+                        ))
+                    })
+                })
+                .collect::<Vec<_>>();
+            (n, vec)
         })
-        .map(|mut v| (v.pop().unwrap(), v.pop().unwrap()))
+        .map(|(n, mut v)| {
+            (
+                v.pop().unwrap_or_else(|| {
+                    panic!(format!(
+                        "need 2 values but less than that on line {}, while parsing \"{:?}\"",
+                        n + 1,
+                        v
+                    ))
+                }),
+                v.pop().unwrap_or_else(|| {
+                    panic!(format!(
+                        "need 2 values but less than that on line {}, while parsing \"{:?}\"",
+                        n + 1,
+                        v
+                    ))
+                }),
+            )
+        })
         .for_each(|(v, k)| {
             if let Some(segment) = plr.process(k, v) {
                 segments.push(segment);
