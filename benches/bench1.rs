@@ -1,7 +1,7 @@
 #![feature(test)]
 extern crate test;
 
-use plr::GreedyPLR;
+use plr::regression::GreedyPLR;
 use plr::Segment;
 use rand::Rng;
 use std::cmp::min;
